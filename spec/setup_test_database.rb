@@ -1,8 +1,7 @@
 require 'pg'
 
-p "Setting up test datasbase ..."
-
-connection = PG.connect(dbname: 'bookmark_manager_test')
-
-# Clear the bookmarks table
-connection.exec("TRUNCATE bookmarks;")
+def setup_test_database
+    p "Setting up test datasbase ..."
+    connection = PG.connect(dbname: 'bookmark_manager_test')
+    connection.exec("TRUNCATE bookmarks;")
+end

@@ -14,4 +14,12 @@ describe Bookmark do
             expect(bookmark.title).to eq 'Test Bookmark'
         end
     end
+
+    describe '.delete' do
+        it 'deletes the given bookmark' do
+            bookmark = Bookmark.add_bookmark(title: 'Gowebme', url: 'www.gowebme.co.uk')
+            Bookmark.delete(id: bookmark.id)
+            expect(Bookmark.all_bookmarks.length).to eq(0)
+        end
+    end
 end

@@ -10,11 +10,12 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
 ])
 SimpleCov.start
 
-# RSpec.configure do |config|
-#   config.before(:each) do
-#     setup_test_database
-#   end
-# end
+RSpec.configure do |config|
+  config.before(:each) do
+    setup_test_database
+  end
+end
+
 ENV['ENVIRONMENT'] = 'test'
 # ENV['RACK_ENV'] = 'test'
 
