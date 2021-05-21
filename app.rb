@@ -1,8 +1,12 @@
-require 'sinatra'
-require 'sinatra/reloader' if development?
+require 'sinatra/base'
+require 'sinatra/reloader'
+require 'sinatra/flash'
+require 'uri'
 require './lib/bookmark'
+require './database_connection_setup'
 
 class Bookmarks < Sinatra::Base
+    register Sinatra::Flash
     configure :development do
         register Sinatra::Reloader
     end
@@ -23,13 +27,23 @@ class Bookmarks < Sinatra::Base
     end
 
     post '/bookmarks' do
-        Bookmark.add_bookmark(url: params[:url], title: params[:title])
+        flash[:notice] = "You must submit a valid URL." unless Bookmark.add_bookmark(url: params[:url], title: params[:title])
         redirect '/bookmarks'
     end
 
     delete '/bookmarks/:id' do
         Bookmark.delete(id: params[:id])
         redirect '/bookmarks'
+    end
+
+    get '/bookmarks/:id/edit' do
+        @bookmark = Bookmark.find(id: params[:id])
+        erb :'bookmarks/edit'
+    end
+
+    patch '/bookmarks/:id' do
+        Bookmark.update(id: params[:id], title: params[:title], url: params[:url])
+        redirect('/bookmarks')
     end
 
     run! if app_file == $0
