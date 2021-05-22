@@ -28,3 +28,7 @@
 </ul>
 
 <h3><%= flash[:notice] %></h3>
+
+<form action="/sessions/destroy" method="post">
+  <input type="submit" value="Sign out" />
+</form>
